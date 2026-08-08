@@ -2,9 +2,7 @@ package application;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Scanner;
 
 import model.entities.Reservation;
@@ -15,7 +13,7 @@ public class Program {
 		// TODO Auto-generated method stub
 		Scanner sc = new Scanner(System.in);
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		List<Reservation> list = new ArrayList<>();
+
 
 		System.out.print("Room number: ");
 		int roomNumber = sc.nextInt();
@@ -24,8 +22,28 @@ public class Program {
 		System.out.print("Check-out date (dd/MM/yyyy): ");
 		Date checkOut = sdf.parse(sc.next());
 
-		Reservation reserva = new Reservation(roomNumber,checkIn,checkOut);
+		if (checkIn.after(checkOut)) {
+			System.out.println("Erro na Reserva : CheckOut antes do Checkin");
+		} else {
+			Reservation reservation = new Reservation(roomNumber, checkIn, checkOut);
+			System.out.println("Resevation: "+reservation);
+		
+			System.out.println();
+			System.out.print("Atualizar reserva ");
+			System.out.print("Check-in date (dd/MM/yyyy): ");
+			checkIn = sdf.parse(sc.next());
+			System.out.print("Check-out date (dd/MM/yyyy): ");
+			checkOut = sdf.parse(sc.next());
+			
+			reservation.updateDates(checkIn, checkOut);
+			System.out.println("Resevation: "+reservation);
+		
+		}
 
+		
+		
+		
+		
 		sc.close();
 	}
 
